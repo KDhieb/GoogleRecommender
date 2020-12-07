@@ -25,7 +25,7 @@ def get_store_status(json):
             status= json_results[i]["opening_hours"]["open_now"]
             statuses.append(status)
     except IndexError:
-            statuses
+            return statuses
     return statuses
 
 def get_ratings_from_json(json):
