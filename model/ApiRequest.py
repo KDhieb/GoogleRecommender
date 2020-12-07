@@ -43,13 +43,14 @@ class ApiRequest:
         keyword = input("Enter Keyword: ")
         ids_list = jsonparser.get_place_id_from_json(self.jsonparser, self.initial_query(radius, keyword))
         information_list = []
+        i = 0;
         for id in ids_list:
-            information_list.append(populartimes.get_id(self.api_key, id))
+            if i < 5:
+                information_list.append(populartimes.get_id(self.api_key, id))
+            i+= 1;
         print(information_list)
-        return information_list
+        jsonparser.getData(self, information_list)
 
-    def parse_place_information(self):
-        ...
 
 
 
