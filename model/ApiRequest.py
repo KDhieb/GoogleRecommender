@@ -35,7 +35,6 @@ class ApiRequest:
         print(url)
         r = requests.get(url)
         response_dict = r.json()
-        print(response_dict['results'])
 
         return response_dict
 
