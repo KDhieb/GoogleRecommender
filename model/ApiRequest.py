@@ -15,7 +15,7 @@ class ApiRequest:
     longitude = None
 
     def __init__(self):
-        file = open("apikey.txt", 'r')
+        file = open("../data/apikey.txt", 'r')
         key = file.read()
         self.api_key = key
         self.jsonparser = jsonparser()
