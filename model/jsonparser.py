@@ -1,13 +1,48 @@
 import json
 import base64
 
+from datetime import date
+import datetime
+
 class jsonparser:
     data = None
     names_list = []
-    statuses = []
     ratings_list = []
     address_list = []
     place_id_list = []
+
+    def getData(self, location_list):
+        names_list = []
+        ratings_list = []
+        address_list = []
+        busyness_list = []
+        for i in range (0, len(location_list)):
+             today = datetime.datetime.today().weekday()
+             hour = datetime.datetime.now().hour
+             if 'populartimes' in location_list[i].keys():
+                 busyness_list.append(location_list[i]["populartimes"][today]["data"][hour]);
+             else:
+                 break;
+             name = location_list[i]["name"];
+             names_list.append(name);
+             ratings_list.append(location_list[i]["rating"]);
+             address_list.append(location_list[i]["address"])
+
+
+        print("Names of Locations: ")
+        print("\n")
+        print(names_list);
+        print("ratings list: ")
+        print("\n")
+        print(ratings_list);
+        print("Address list: ")
+        print("\n")
+        print(address_list);
+        print("Busyness ratings: ")
+        print("\n")
+        print(busyness_list);
+
+
 
     def openFile(self, filename):
         f = open(filename)
