@@ -35,7 +35,6 @@ class Gui:
         self.scrollbar = tk.Scrollbar(self.results, orient='vertical')
         self.scrollbar.grid(row =0, column = 2, rowspan=2, sticky='nsew')
         self.scrollbar.config(command=self.resultsList.yview)
-        #self.resultsList.config(yscrollcommand = self.scrollbar.set)
 
     def initialize_inputs(self):
         self.message_label = tk.Label(self.header, width=100, text="Welcome User!")
