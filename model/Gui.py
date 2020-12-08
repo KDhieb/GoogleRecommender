@@ -1,7 +1,7 @@
 import tkinter as tk
+import datetime
 
 from model.ApiRequest import ApiRequest
-import datetime
 
 
 class Gui:
@@ -14,7 +14,7 @@ class Gui:
     BG2 = "beige"
     BTN_BKG = "black"
     INPUT_BOX_WIDTH = 20
-
+    MAX_LISTINGS = 15
 
     def __init__(self):
         self.root = tk.Tk()
@@ -32,10 +32,14 @@ class Gui:
         self.resultsList = tk.Listbox(self.results)
         self.resultsList.grid(row=0, column=0, rowspan=2, columnspan=2, sticky='nsew')
 
+        self.scrollbar = tk.Scrollbar(self.results, orient='vertical')
+        self.scrollbar.grid(row =0, column = 2, rowspan=2, sticky='nsew')
+        self.scrollbar.config(command=self.resultsList.yview)
+        #self.resultsList.config(yscrollcommand = self.scrollbar.set)
+
     def initialize_inputs(self):
         self.message_label = tk.Label(self.header, width=100, text="Welcome User!")
         self.message_label.grid(row=0, column=0, columnspan=2, sticky='nsew', pady=10)
-        #self.message_label.place(anchor='center')
 
         self.keyword_entry = tk.Entry(self.entryFrame1, width=self.INPUT_BOX_WIDTH)
         self.keyword_entry.grid(row=0, column=1, sticky='w')
@@ -53,8 +57,6 @@ class Gui:
         self.search_btn.grid(row=0, column=0, sticky='e', padx=80)
         self.search_btn.configure(command=self.search)
 
-
-
     def initialize_frames(self):
         self.header = tk.Frame(self.root, bg=self.BG1)
         self.results = tk.Frame(self.root, bg=self.BG2)
@@ -63,7 +65,7 @@ class Gui:
         self.entryFrame3 = tk.Frame(self.root, bg=self.BG1)
 
         self.header.grid(row=0, column=0, sticky='news')
-        self.results.grid(row=1,column=0,rowspan=3, columnspan=2, sticky='news')
+        self.results.grid(row=1, column=0, rowspan=3, columnspan=2, sticky='news')
         self.entryFrame1.grid(row=2, column=0, sticky='news')
         self.entryFrame2.grid(row=3, column=0, sticky='news')
         self.entryFrame3.grid(row=4, column=0, sticky='news')
@@ -85,12 +87,11 @@ class Gui:
         self.header.columnconfigure(1, weight=1)
         self.header.rowconfigure(1, weight=0)
 
-
     def search(self):
         api_request = ApiRequest()
         radius = self.radius_entry.get()
         keyword = self.keyword_entry.get()
-        search_list = api_request.get_place_information(radius, keyword)
+        search_list = api_request.get_place_information(radius, keyword, self.MAX_LISTINGS)
         self.update_results(search_list)
         self.radius_entry.delete(0, 'end')
         self.keyword_entry.delete(0, 'end')
@@ -99,10 +100,9 @@ class Gui:
     def update_message_label(self, latitude, longitude):
         date = datetime.date.today()
         hour = datetime.datetime.now().hour
-        min = datetime.datetime.now().minute
-        string_msg = f"Search results from your coordinates of {latitude}, {longitude} at {date} {hour}:{min}"
+        minute = datetime.datetime.now().minute
+        string_msg = f"Search results from your coordinates of {latitude}, {longitude} at {date} {hour}:{minute}"
         self.message_label['text'] = string_msg
-
 
     def update_results(self, biz_list):
         self.resultsList.delete(0, 'end')
@@ -116,10 +116,11 @@ class Gui:
             busyness = biz.busyness
             d = biz.distance
             distance = f"{d} km" if d != "N/A" else d
-            entry = f"Name: #{pos}. {name} | Address: {address} | Number: {number} | " \
+            entry = f"#{pos}. Name: {name} | Address: {address} | Number: {number} | " \
                     f"Rating: {rating} | Busyness: {busyness} | Distance: {distance}"
             self.resultsList.insert(counter, entry)
             counter += 1
             pos += 1
+
 
 gui = Gui()

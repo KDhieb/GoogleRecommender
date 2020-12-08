@@ -14,9 +14,11 @@ class JsonParser:
     def __init__(self):
         self.business_list = []
         self.place_id_list = []
+        max_listings = 5
         
 
     def get_filtered_business_list(self, location_list, user_latitude, user_longitude):
+
         for i in range(0, len(location_list)):
             if 'populartimes' in location_list[i].keys():
                 today = datetime.datetime.today().weekday()
@@ -46,11 +48,11 @@ class JsonParser:
         print(f"Distance: {business.distance}")
         print("\n")
 
-    def get_place_id_from_json(self, json):
+    def get_place_id_from_json(self, json, max_listings):
         try:
             num_of_results = 0
             pos = 0
-            while num_of_results < 5:
+            while num_of_results < max_listings:
                 json_results = json["results"]
                 try:
                     status = json_results[pos]["opening_hours"]["open_now"]

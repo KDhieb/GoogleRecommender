@@ -52,16 +52,18 @@ class ApiRequest:
 
         return radius, keyword
 
-    def get_place_information(self, radius, keyword):
+    def get_place_information(self, radius, keyword, max_listings=5):
         if not radius.isdigit():
             raise Exception
         radius_km_to_m = str(int(radius) * 1000)
         parsed_keyword = urllib.parse.quote_plus(keyword)
-        ids_list = JsonParser.get_place_id_from_json(self.jsonparser, self.initial_query(radius_km_to_m, parsed_keyword))
+        ids_list = JsonParser.get_place_id_from_json(self.jsonparser,
+                                                     self.initial_query(radius_km_to_m, parsed_keyword),
+                                                     max_listings)
         information_list = []
         i = 0
         for id in ids_list:
-            if i < 5:
+            if i < max_listings:
                 information_list.append(populartimes.get_id(self.api_key, id))
             i+= 1
         return self.jsonparser.get_filtered_business_list(information_list, self.latitude, self.longitude)
