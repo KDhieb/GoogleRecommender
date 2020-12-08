@@ -29,7 +29,13 @@ restaurants that are not too busy if you're looking to eat as soon as possible.
 
 # How it Works:
 
-The app used Python for the backend and Tkinter for the graphical user interface. For the backend, the app uses Google Places API for to query for local business data based various parameteres. The local results are found using the latitude and longitude retrieved from the user's ip address. The busyness level is retreived using the popularplaces python library which scrapes Google (using the queried data) for displayed busyness data (since these metrics are not currently availlable directly from the Google Places API). The results are ranked on busyness level (from low to high) and then from distance if busyness data is not availlable. 
+The app uses Python for the backend and Tkinter for the graphical user interface. To generate the data, 
+we used Google Places API to query for local business data based various parameters. 
+The local results are found using the latitude and longitude retrieved from the user's ip address. 
+The busyness level is retrieved using the popularplaces python library which scrapes Google (using the queried data) 
+for displayed busyness data (since these metrics are not currently available directly from the Google Places API). 
+The results are ranked on busyness level (from low to high) and then from distance if busyness data is not available. 
+The distance between the user and each business is calculated using the geopy Nominatim library.
 
 
 
