@@ -23,9 +23,9 @@ restaurants that are not too busy if you're looking to eat as soon as possible.
 
 * Get recommended businesses based on busyness level, distance, and Google rating
 
-* View each recommendation's business information (address, telephone number, distance, rating etc.).
+* View each recommendation's business information (address, telephone number, distance, rating etc.)
 
-* Be able to the select maximum distance you're willing to travel.
+* Be able to select the maximum distance you are willing to travel
 
 # How it Works:
 
