@@ -107,6 +107,8 @@ class Gui:
         self.resultsList.delete(0, 'end')
         counter = 0
         pos = 1
+        if len(biz_list) == 0:
+            self.resultsList.insert(0, " No Results Found! (Try inputting a further distance)")
         for biz in biz_list:
             name = biz.name
             address = biz.address
@@ -120,6 +122,5 @@ class Gui:
             self.resultsList.insert(counter, entry)
             counter += 1
             pos += 1
-
 
 gui = Gui()
